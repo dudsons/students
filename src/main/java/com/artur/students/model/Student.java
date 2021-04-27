@@ -23,6 +23,7 @@ public class Student {
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     public Long getId() {
