@@ -2,7 +2,8 @@ package com.artur.students.exception;
 
 public enum StudentError {
 
-    STUDENT_NOT_FOUND ("student is not exists");
+    STUDENT_NOT_FOUND ("student is not exists"),
+    EMAIL_IS_EXIST ("email exists in database");
 
     private String message;
 

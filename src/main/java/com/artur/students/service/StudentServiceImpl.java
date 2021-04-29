@@ -2,9 +2,9 @@ package com.artur.students.service;
 
 import com.artur.students.exception.StudentError;
 import com.artur.students.exception.StudentException;
+import com.artur.students.model.StatusEnum;
 import com.artur.students.model.Student;
 import com.artur.students.repository.StudentRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,12 +26,24 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public List<Student> getStudents() {
+    public List<Student> getStudents(StatusEnum status) {
+        if(StatusEnum.ACTIVE.getStatus().equals(status)){
+            return studentRepository.findAllByStatus(StatusEnum.ACTIVE);
+        } else if (StatusEnum.INACTIVE.getStatus().equals(status)){
+            return studentRepository.findAllByStatus(StatusEnum.INACTIVE);
+        }
+
         return studentRepository.findAll();
     }
 
     @Override
     public Student addStudent(Student student) {
+        if(studentRepository.existsStudentByEmail(student.getEmail())){
+           throw new StudentException(StudentError.EMAIL_IS_EXIST);
+        }
+
+
+
         return studentRepository.save(student);
     }
 
