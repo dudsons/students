@@ -1,10 +1,7 @@
 package com.artur.students.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 @SequenceGenerator(name = "seqId", initialValue = 200, allocationSize = 1)
@@ -25,6 +22,10 @@ public class Student {
     @Email
     @Column(unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private StatusEnum status;
 
     public Long getId() {
         return id;
@@ -56,5 +57,13 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 }
