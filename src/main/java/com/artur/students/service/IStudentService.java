@@ -12,4 +12,5 @@ public interface IStudentService {
     void deleteStudent(Long id);
     Student putStudent(Long id, Student student);
     Student patchStudent (Long id, Student student);
+    Student deactivateStudent(Long id);
 }

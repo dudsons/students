@@ -1,10 +1,8 @@
 package com.artur.students.controller;
 
+import com.artur.students.model.StatusEnum;
 import com.artur.students.model.Student;
-import com.artur.students.repository.StudentRepository;
 import com.artur.students.service.IStudentService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,8 +19,9 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public List<Student> getStudents(@RequestParam(name= "status", required = false) StatusEnum status)
+    {
+        return studentService.getStudents(status);
     }
 
     @PostMapping
@@ -37,7 +36,7 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Long id) {
-         studentService.deleteStudent(id);
+         studentService.deactivateStudent(id);
     }
 
     @PutMapping("/{id}")

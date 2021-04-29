@@ -16,6 +16,8 @@ public class StudentExceptionHandler {
             httpStatus = HttpStatus.NOT_FOUND;
         } else if (StudentError.EMAIL_IS_EXIST.equals(studentException.getStudentError())) {
             httpStatus = HttpStatus.CONFLICT;
+        } else if (StudentError.STUDENT_NOT_ACTIVE.equals(studentException.getStudentError())){
+            httpStatus = HttpStatus.BAD_REQUEST;
         }
 
         return new ResponseEntity<>(new ErrorInfo(studentException.getStudentError().getMessage()), httpStatus);
