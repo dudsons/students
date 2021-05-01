@@ -47,8 +47,6 @@ public class StudentServiceImpl implements IStudentService {
            throw new StudentException(StudentError.EMAIL_IS_EXIST);
         }
 
-
-
         return studentRepository.save(student);
     }
 
@@ -71,6 +69,10 @@ public class StudentServiceImpl implements IStudentService {
                 studentFromDb -> {
                     studentFromDb.setFirstName(student.getFirstName());
                     studentFromDb.setLastName(student.getLastName());
+                    if( !studentFromDb.getEmail().equals(student.getEmail()) &&
+                            studentRepository.existsStudentByEmail(student.getEmail())){
+                        throw new StudentException(StudentError.EMAIL_IS_EXIST);
+                    }
                     studentFromDb.setEmail(student.getEmail());
                     studentFromDb.setStatus(student.getStatus());
                     return studentRepository.save(studentFromDb);
@@ -87,6 +89,10 @@ public class StudentServiceImpl implements IStudentService {
                 studentFromDb.setLastName(student.getLastName());
             }
             if (!StringUtils.isEmpty(student.getEmail())) {
+                if( !studentFromDb.getEmail().equals(student.getEmail()) &&
+                        studentRepository.existsStudentByEmail(student.getEmail())){
+                    throw new StudentException(StudentError.EMAIL_IS_EXIST);
+                }
                 studentFromDb.setEmail(student.getEmail());
             }
             if(!StringUtils.isEmpty(student.getStatus())){
